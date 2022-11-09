@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { createTable } from "../utils/api";
 
 function NewTable() {
@@ -39,6 +39,7 @@ function NewTable() {
         return () => abortCon.abort();
     };
 
+    //returns new table form
     return (
         <main>
             <div className="createErrors">{mapErrors ? mapErrors : null}</div>

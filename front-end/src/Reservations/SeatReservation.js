@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
-import ErrorAlert from "../layout/ErrorAlert";
 import { listTables, updateToSeated } from "../utils/api";
 
 function SeatReservation(){
@@ -10,25 +9,23 @@ function SeatReservation(){
     const [tables, setTables] = useState([]);
     const [formData, setFormData] = useState(1);
     const [errors, setErrors] = useState({});
-    //useState for formData
-    //submit handler
-    //Table number: `<select name="table_id" />`. The text of each option must be `{table.table_name} - {table.capacity}` so the tests can find the options.
-    //PUT to `/tables/:table_id/seat/` in order to save the table assignment.
-    //display a `Submit` button that, when clicked, assigns the table to the reservation then displays the `/dashboard` page
-    //display a `Cancel` button that, when clicked, returns the user to the previous page
+ 
+    //API CALL to get available tables
     useEffect(() => {
-        const ac = new AbortController();
-        listTables(ac.signal).then(setTables);
-        return () => ac.abort();
+        const abortCon = new AbortController();
+        listTables(abortCon.signal).then(setTables);
+        return () => abortCon.abort();
       }, []);
-    const mapErrors = Object.keys(errors).map((error, index) => (
+    const mapErrors = Object.keys(errors).map((error) => (
         <div className="alert alert-danger" role="alert">{error}</div>
     ));
 
+    //handles changes
     const handleChange = (event) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
 
+    //handles 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -42,6 +39,8 @@ function SeatReservation(){
         }
     }
 
+
+    //returns drop-down menu with tables as reservation options
     return (
         <main>
             <div className="createErrors">{mapErrors ? mapErrors : null}</div>

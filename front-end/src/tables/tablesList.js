@@ -1,17 +1,11 @@
 import React from "react";
+import TableRows from "./TableRows";
+
 
 function TablesList({tables}) {
-    const rows = tables.map(({table_name, table_id, capacity, reservation_id}, index) => (
-        <tr key={index}>
-          <td>{table_name}</td>
-          <td>{capacity}</td>
-          <td>{reservation_id ? "Occupied" : "Free"}</td>
-          <td>{reservation_id ? <button type="submit" className="btn btn-primary" onClick={handleSubmit} data-table-id-finish={table_id}> Finish </button> : null}</td>
-        </tr>
-    ));
-    return (
+  return (
         <div className="reservations-list">
-          <table>
+          <table className="table">
             <thead>
               <tr>
                 <th>Table Name</th>
@@ -20,7 +14,9 @@ function TablesList({tables}) {
               </tr>
             </thead>
             <tbody>
-            {rows}
+            {tables && tables.map((table) => (
+              <TableRows table={table} key={table.table_id} />
+            ))}
             </tbody>
           </table>
         </div>

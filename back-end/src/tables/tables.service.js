@@ -38,7 +38,7 @@ function create(table){
     .then((created)=>created[0])
 }
 
-function destroy(table_id, reservation_id) {
+function finish(table_id, reservation_id) {
     return knex.transaction(async (trx) => {
         await trx("reservations")
         .where({ reservation_id })
@@ -56,5 +56,5 @@ module.exports = {
     read,
     update,
     create,
-    destroy
+    finish
 }

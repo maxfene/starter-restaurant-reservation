@@ -142,3 +142,81 @@ export async function updateToSeated(table_id, reservation_id) {
   }
   return await fetchJson(url, options, []);
 }
+
+
+/**
+ * Updates table status to 'seated' & deletes reservation
+ * @param table_id
+ * the table reservation is being seated at
+ * @param reservation_id
+ * reservation being seated
+ * @param signal 
+ * optional AbortController.signal
+ * @returns {Promise<table>}
+ * a promise that updates the reservation status and updates the table availability.
+ */
+export async function updateToFinished(table_id, reservation_id, signal) {
+  const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+  const options = {
+    method: "DELETE",
+    headers,
+    body: JSON.stringify({data : { reservation_id }}),
+    signal,
+  }
+  return await fetchJson(url, options, []);
+}
+
+/**
+ * Updates reservation status to 'cancelled'
+ * @param reservation
+ * reservation being altered
+ * @returns {Promise<table>}
+ * a promise that updates the reservation status; can only be done if reservation status is "booked"
+ */
+export async function cancelReservation(reservation, status) {
+  const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}/status`;
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: { status } }),
+  }
+  return await fetchJson(url, options, reservation);
+}
+/**
+ * retrieves reservation by reservation_id
+ * @param reservation_id
+ * reservation being returned
+ * @param signal 
+ * optional AbortController.signal
+ * @returns {Promise<table>}
+ * a promise that returns the reservation.
+ */
+export async function getReservation(reservation_id, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}`;
+  const options = {
+    method: "GET",
+    signal,
+  }
+  return await fetchJson(url, options, [])
+}
+
+/**
+ * Updates reservation to edited version from form
+ * Requires only table input from form
+ * @param reservation_id
+ * reservation being seated
+ * @param signal 
+ * optional AbortController.signal
+ * @returns {Promise<table>}
+ * a promise that updates the reservation.
+ */
+export async function editReservation(reservation_id, reservation, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}`;
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({data: reservation}),
+    signal,
+  };
+  return await fetchJson(url, options, []);
+}

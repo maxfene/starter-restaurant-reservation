@@ -2,3 +2,30 @@
   background-color: #393a44;
   min-width: 200px;
 }
+
+/* .table {
+  border-collapse: collapse;
+} */
+
+table {
+  border-collapse: collapse;
+  overflow: auto;
+  width: 50%
+}
+th {
+  border-bottom: 1px solid black;
+  text-align: center;
+  background-color: cornflowerblue;
+  color: white;
+  width: 100%
+}
+  
+td {
+  border-bottom: 1px solid lightgrey;
+  text-align: center;
+}
+
+button {
+  width: "50px",
+}
+  

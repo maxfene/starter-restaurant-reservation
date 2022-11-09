@@ -145,10 +145,10 @@ async function create(req, res) {
     res.status(201).json({data});
 }
 
-async function destroy(req, res) {
+async function finish(req, res) {
     const {table_id} = res.locals;
     const table = await tableService.read(table_id);
-    const data = await tableService.destroy(table_id, table.reservation_id);
+    const data = await tableService.finish(table_id, table.reservation_id);
     res.json({data});
 }
 
@@ -160,6 +160,6 @@ async function list(req, res) {
 module.exports = {
     update: [hasDataProp, hasReservationId, asyncErrorBoundary(tableExists), asyncErrorBoundary(reservationExists), validCapacity, ifSeated, asyncErrorBoundary(update)],
     create: [hasRequiredProperties, hasDataProp, validateTableName, validateTableCap, asyncErrorBoundary(create)],
-    destroy: [asyncErrorBoundary(tableExists), validateTableStatus, asyncErrorBoundary(destroy)],
+    finish: [asyncErrorBoundary(tableExists), validateTableStatus, asyncErrorBoundary(finish)],
     list: [asyncErrorBoundary(list)]
 }

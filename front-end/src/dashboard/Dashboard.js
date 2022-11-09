@@ -19,6 +19,7 @@ function Dashboard({ date }) {
   const [dateParam, setDateParam] = useState(queryDate ? queryDate : date);
   const [tables, setTables] = useState([]);
 
+  //gets reservations and tables
   useEffect(loadDashboard, [dateParam, date]);
   function loadDashboard() {
     const date = queryDate;
@@ -32,14 +33,14 @@ function Dashboard({ date }) {
       .catch(setReservationsError);
     return () => abortController.abort();
   }
-
+  //returns reservations and tables as tables
   return (
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Reservations for {dateParam}</h4>
       </div>
-      {/* <ErrorAlert error={reservationsError} /> */}
+      <ErrorAlert error={reservationsError} />
       <ReservationsList reservations={reservations} />
       <TablesList tables={tables}/>
     </main>
